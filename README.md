@@ -2,7 +2,7 @@
 
 ## Pre-installation
 
-### Download distubution image
+### Download distribution image
 
 First of all, let's download distribution image.
 
