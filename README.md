@@ -46,3 +46,5 @@ sha1sum path/to/arch/image
 Example of the command result:
 
 ![Checksum of Arch GNU/Linux](./images/arch_linux_iso_checksum_result.png)
+
+We see that the SHA-1 hash sums are equal.
