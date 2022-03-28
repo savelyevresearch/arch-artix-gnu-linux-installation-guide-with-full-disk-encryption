@@ -105,3 +105,41 @@ After executing this command, you should see the following:
 ![GPG signature for Artix GNU/Linux image](./images/artix_linux_gpg_signature_checking.png)
 
 This is a "Good signature", so everything is fine.
+
+### Creating a USB drive with a recorded distribution image
+
+This will irrevocably destroy all data on you USB drive.
+To find the name of your USB drive, you need to use `lsblk` command. Make sure that it is not mounted.
+
+- #### On GNU/Linux
+
+Using `dd` command:
+```zsh
+dd bs=4M if=path/to/distribution/image of=path/to/usb/drive
+```
+
+Using `cat` command:
+```
+cat path/to/distribution/image > path/to/usb/drive
+```
+
+Using `cp` command:
+```zsh
+cp path/to/distribution/image path/to/usb/drive
+```
+
+Using `tee` command:
+```zsh
+tee < path/to/distribution/image > path/to/usb/drive
+```
+
+Using `pv` command:
+```zsh
+pv path/to/distribution/image > path/to/usb/drive
+```
+
+All these commands are part of GNU core utilities.
+
+- #### On Windows
+
+You need to download some software to create bootable USB drives. For example: Rufus, Etcher.
