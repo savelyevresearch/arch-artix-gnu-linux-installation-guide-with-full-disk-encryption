@@ -92,3 +92,16 @@ After executing this command, you should see the following:
 ![GPG signature for Arch GNU/Linux image](./images/arch_linux_gpg_signature_checking.png)
 
 This is a "Good signature", so everything is fine.
+
+- #### Artix GNU/Linux
+
+For Artix GNU/Linux, the command is similar:
+```zsh
+gpg --keyserver-options auto-key-retrieve --verify artix-base-openrc-version-x86_64.iso.sig
+```
+
+After executing this command, you should see the following:
+
+![GPG signature for Artix GNU/Linux image](./images/artix_linux_gpg_signature_checking.png)
+
+This is a "Good signature", so everything is fine.
