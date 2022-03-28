@@ -76,3 +76,19 @@ Example of the command result:
 ![Checksum of Artix GNU/Linux](./images/artix_linux_iso_checksum_result.png)
 
 We see that SHA-256 hash sums are equal.
+
+### Verify signature
+
+Let's download the GPG signature file corresponding to the distribution image we downloaded. And verify the .iso image.
+
+- #### Arch GNU/Linux
+
+To verify the Arch GNU/Linux image using GNU Privacy Guard, we need to do the following:
+```zsh
+gpg --keyserver-options auto-key-retrieve --verify archlinux-version-x86_64.iso.sig
+```
+After executing this command, you should see the following:
+
+![GPG signature for Arch GNU/Linux image](./images/arch_linux_gpg_signature_checking.png)
+
+This is a "Good signature", so everything is fine.
