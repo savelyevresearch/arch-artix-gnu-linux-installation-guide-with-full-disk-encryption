@@ -61,13 +61,13 @@ Checksums are also listed on the mirror sites listed on the [download page](http
 
 For example, on this [mirror site](https://mirrors.dotsrc.org/artix-linux/iso/) , the checksums are in sha256sums file.
 
-![Mirror site for Artix GNU/Linux](./images/arch_linux_mirror_site.png)
+![Mirror site for Artix GNU/Linux](./images/artix_linux_mirror_site.png)
 
 The content of the sha256sums file containing SHA-256 checksums:
 
 ![SHA-256 checksums for Artix GNU/Linux](./images/artix_linux_mirror_site_checksums.png)
 
-To get the SHA-256 hash sum of the .iso 0image, we need to do the following:
+To get the SHA-256 hash sum of the .iso image, we need to do the following:
 ```zsh
 sha256sum path/to/artix/image
 ```
