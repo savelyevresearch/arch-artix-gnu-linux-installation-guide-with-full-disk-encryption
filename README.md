@@ -181,3 +181,79 @@ ls /sys/firmware/efi/efivars
 If the command shows the directory without error, then the system is booted in UEFI mode.
 If the directory does not exist, the system may be booted in BIOS (or CSM) mode.
 If the system did not boot in the mode you desired, refer to your motherboard's manual.
+
+### Connect to the internet
+
+- #### Arch GNU/Linux
+
+Ensure your network interface is listed and enabled, for example with ip-link command:
+```zsh
+ip link
+```
+
+For wireless and WWAN, make sure the card is not blocked with rfkill.
+
+How to list all wireless cards using rfkill?
+
+```zsh
+rfkill list
+```
+
+Example of the command result:
+
+![rfkill output for Arch GNU/Linux](./images/arch_linux_rfkill_result.png)
+
+If your wireless card is blocked by rfkill, execute the following:
+```zsh
+rfkill unblock wifi
+```
+or
+```zsh
+rfkill unblock all
+```
+
+It is possible that the card will go from hard-blocked and soft-unblocked state into hard-unblocked and soft-blocked state by pressing the hardware button (i.e. the soft-blocked bit is just switched no matter what).
+This can be adjusted by tuning some options of the rfkill Kernel module.
+
+Now we use `iwctl` to connect to a wireless network.
+
+To get an interactive prompt for `iwctl` do:
+```zsh
+iwctl
+```
+
+In the iwctl prompt you can auto-complete commands and device names by hitting `Tab`.
+To exit the interactive prompt, send EOF by pressing `Ctrl+d`.
+You can use all commands as command line arguments without entering an interactive prompt. For example: `iwctl device wlan0 show`.
+
+To list all available commands:
+```zsh
+[iwd]# help
+```
+
+##### Connect to a network
+
+First, if you do not know your wireless device name, list all Wi-Fi devices:
+```zsh
+[iwd]# device list
+```
+
+Then, to scan for networks: 
+```zsh
+[iwd]# station device scan
+```
+
+You can then list all available networks: 
+```
+[iwd]# station device get-networks
+```
+
+Finally, to connect to a network:
+```zsh
+[iwd]# station device connect SSID
+```
+
+If a passphrase is required, you will be prompted to enter it. Alternatively, you can supply it as a command line argument:
+```zsh
+iwctl --passphrase passphrase station device connect SSID
+```
