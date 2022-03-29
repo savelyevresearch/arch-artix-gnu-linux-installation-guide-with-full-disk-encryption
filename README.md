@@ -300,3 +300,12 @@ To connect to an open network, use the second field beginning with wifi_:
 ```zsh
 connmanctl connect wifi_some-network-id
 ```
+
+To check your internet connection, execute the following:
+```
+ping artixlinux.org 
+```
+
+Example of the command result:
+
+![Ping output for Artix GNU/Linux](./images/artix_linux_ping.png) 
