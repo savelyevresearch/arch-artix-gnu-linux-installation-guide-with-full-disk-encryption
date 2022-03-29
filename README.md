@@ -257,3 +257,11 @@ If a passphrase is required, you will be prompted to enter it. Alternatively, yo
 ```zsh
 iwctl --passphrase passphrase station device connect SSID
 ```
+
+To check your internet connection, execute the following:
+```
+ping archlinux.org 
+```
+Example of the command result:
+
+![Ping output for Arch GNU/Linux](./images/arch_linux_ping.png)
