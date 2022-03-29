@@ -265,3 +265,38 @@ ping archlinux.org
 Example of the command result:
 
 ![Ping output for Arch GNU/Linux](./images/arch_linux_ping.png)
+
+#### - Artix GNU/Linux
+
+Everything is similar with Arch GNU/Linux, only for wireless connections you need to use connmanctl.
+
+To get an interactive prompt for connmanctl do:
+```zsh
+connmanctl
+```
+
+In the connmanctl prompt you can auto-complete commands and device names by hitting `Tab`.
+To exit the interactive prompt, send EOF by pressing `Ctrl+d`.
+You can use all commands as command line arguments without entering an interactive prompt. For example: `connmanctl enable wifi`.
+
+To list all available commands:
+```zsh
+connmanctl help
+```
+
+##### Connect to a network
+
+To scan for nearby Wi-Fi networks:
+```zsh
+connmanctl scan wifi
+```
+
+To list the available networks found after a scan run:
+```
+connmanctl services
+```
+
+To connect to an open network, use the second field beginning with wifi_:
+```zsh
+connmanctl connect wifi_some-network-id
+```
