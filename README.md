@@ -143,3 +143,14 @@ All these commands are part of GNU core utilities.
 - #### On Windows
 
 You need to download some software to create bootable USB drives. For example: Rufus, Etcher.
+
+### Boot the live environment
+
+Arch GNU/Linux and Artix GNU/Linux installation images do not support Secure boot.
+You will need to disable Secure boot to boot the installation medium.
+If desired, Secure boot can be set up after completing the installation.
+
+For this step, you need to restart your computer and enter the boot menu, then select your USB drive as the boot device (just change the boot priority).
+Save the download settings and start your computer.
+
+Congratulations, you have launched Arch/Artix Linux!
