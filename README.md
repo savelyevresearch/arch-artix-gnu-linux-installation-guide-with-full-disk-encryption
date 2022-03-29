@@ -154,3 +154,19 @@ For this step, you need to restart your computer and enter the boot menu, then s
 Save the download settings and start your computer.
 
 Congratulations, you have launched Arch/Artix Linux!
+
+### Set the keyboard layout
+
+To check the available layout types:
+```zsh
+ls -R /usr/share/kbd/keymaps/
+```
+
+To set the keyboard layout, pass a corresponding file name to loadkeys command, omitting path and file extension. 
+
+For example, to set the Spanish (Spain) layout, type:
+```zsh
+loadkeys es
+```
+
+Console fonts are located in `/usr/share/kbd/consolefonts/` and can likewise be set with setfont command.
