@@ -266,7 +266,7 @@ Example of the command result:
 
 ![Ping output for Arch GNU/Linux](./images/arch_linux_ping.png)
 
-#### - Artix GNU/Linux
+- #### Artix GNU/Linux
 
 Everything is similar with Arch GNU/Linux, only for wireless connections you need to use connmanctl.
 
