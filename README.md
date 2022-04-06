@@ -266,7 +266,7 @@ Example of the command result:
 
 ![Ping output for Arch GNU/Linux](./images/arch_linux_ping.png)
 
-#### - Artix GNU/Linux
+- #### Artix GNU/Linux
 
 Everything is similar with Arch GNU/Linux, only for wireless connections you need to use connmanctl.
 
@@ -314,7 +314,7 @@ Example of the command result:
 
 Enable Network Time Protocols (NTP) and allow the system to update the time via the Internet.
 
-#### - Arch GNU/Linux
+- #### Arch GNU/Linux
 
 ```zsh
 timedatectl set-ntp true
