@@ -308,4 +308,20 @@ ping artixlinux.org
 
 Example of the command result:
 
-![Ping output for Artix GNU/Linux](./images/artix_linux_ping.png) 
+![Ping output for Artix GNU/Linux](./images/artix_linux_ping.png)
+
+### Enable Network Time Protocols
+
+Enable Network Time Protocols (NTP) and allow the system to update the time via the Internet.
+
+#### - Arch GNU/Linux
+
+```zsh
+timedatectl set-ntp true
+```
+
+To check the NTP service status, use:
+
+```zsh
+timedatectl status
+```
