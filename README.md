@@ -308,4 +308,64 @@ ping artixlinux.org
 
 Example of the command result:
 
-![Ping output for Artix GNU/Linux](./images/artix_linux_ping.png) 
+![Ping output for Artix GNU/Linux](./images/artix_linux_ping.png)
+
+### Enable Network Time Protocols
+
+Enable Network Time Protocols (NTP) and allow the system to update the time via the Internet.
+
+- #### Arch GNU/Linux
+
+```zsh
+timedatectl set-ntp true
+```
+
+To check the NTP service status, use:
+
+```zsh
+timedatectl status
+```
+
+- #### Artix GNU/Linux
+
+For this, we need to download `ntp` package using `pacman` package manager:
+```
+sudo pacman -Sy ntp
+```
+
+Configuration file for NTP is located at the path `/etc/ntp.conf`.
+
+Example:
+
+![NTP configutation file for Artix GNU/Linux](./images/artix_linux_ntp_cfg.png)
+
+In order to update the time use the following command from the command prompt:
+```zsh
+ntpdate pool.ntp.org
+```
+
+If the commands of the `ntp` package do not exist in the current terminal session, just open a new terminal.
+
+You can now start (or restart) the NTP service to synchronize the clock.
+```zsh
+sudo rc-service /usr/bin/ntpd start
+```
+
+Also you can add `ntpd` to the `default runlevel`.
+```zsh
+sudo rc-update add /usr/bin/ntpd
+```
+
+You can verify that your machine is synchronizing the time by using the `ntpq` command.
+It could take a little while to synchronize the first time around, so be patient.
+From the command line execute the `ntpq` command with the `-p` option, as below:
+```zsh
+ntpq -p
+```
+
+This will print out a list of servers:
+
+![ntpq result for Artix GNU/Linux](./images/artix_linux_ntpq.png)
+
+Now, in the list of servers verify that one of the remote servers start with an asterisk (*).
+That is the server that is currently being used to synchronize your clock.
