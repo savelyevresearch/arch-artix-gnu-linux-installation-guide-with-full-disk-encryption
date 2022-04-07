@@ -422,3 +422,28 @@ Now let’s create our partitions, a first on with `600MB` and another one to ge
 You should now have two partitions:
 - `/dev/sdaX` - ext4 boot (`/dev/sdaX` in this case is the boot partition)
 - `/dev/sdaX` - ext4 root (`/dev/sdaX` in this case is the root partition)
+
+- #### UEFI mode
+
+Run `cfdisk` to create three partitions, one for EFI (if the EFI system partition already exists, just use this partition), another for boot and a third for the encrypted root.
+Swap space will be used as a swap file in the encrypted root file system.
+
+Run `cfdisk` and if asked choose `gpt`:
+```zsh
+cfdisk /dev/sda
+```
+
+Now let’s create our partitions, a first one with `600MB`, a second one with `600MB` (If you need) and a third to get the remaining space:
+- Go to `New` and press `Enter`, in partition size write `600MB` and press `Enter`;
+- Go to `Type` and choose `EFI System`:
+
+![Creating of the EFI system partition using cfdisk](./images/cfdisk_efi_selection.png)
+
+- Choose `Free space`, go to `New` and press `Enter`, in partition size write `600MB` and press `Enter`;
+- Choose `Free space` and go to `New` and press `Enter`, leave space and press `Enter`;
+- Go to `Write` and confirm when asked. Go to `Quit` and leave.
+
+You should now have three partitions:
+- `/dev/sdaX` - EFI system partition (`/dev/sdaX` in this case is the EFI system partition);
+- `/dev/sdaX` — ext4 boot (`/dev/sdaX` in this case is the boot partition);
+- `/dev/sdaX` - ext4 root (`/dev/sdaX` in this case is the root partition)
