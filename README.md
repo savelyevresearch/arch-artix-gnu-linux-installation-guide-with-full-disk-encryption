@@ -369,3 +369,81 @@ This will print out a list of servers:
 
 Now, in the list of servers verify that one of the remote servers start with an asterisk (*).
 That is the server that is currently being used to synchronize your clock.
+
+### Prepare for LUKS encryption
+
+Before disk setup, load the `dm-crypt` and `dm-mod` kernel modules:
+```zsh
+modprobe dm-crypt
+```
+```zsh
+modprobe dm-mod
+```
+
+### Partition the disks
+
+When recognized by the live system, disks are assigned to a block device such as `/dev/sda`, `/dev/nvme0n1` or `/dev/mmcblk0`.
+To identify these devices, we will to use lsblk command.
+```zsh
+lsblk
+```
+
+Example:
+
+![Output of the lsblk command](./images/lslbk_result.png)
+
+The following partitions are required for a chosen device:
+- One partition for the root directory `/`;
+- For booting in UEFI mode: and EFI system partition.
+
+**Tip**: If the disk does not show up, make sure the disk controller is not in RAID mode.
+**Tip**: If the disk from which you want to boot already has an EFI system partition, do not create another one, but use the existing partition instead.
+**Tip**: Swap space can be set on a swap file for file systems supporting it.
+
+- #### BIOS mode
+
+Run `cfdisk` to create two partitions, one for boot and another for the encrypted root.
+Swap space will be used as a swap file in the encrypted root file system.
+
+Run `cfdisk` and if asked choose `dos`:
+```zsh
+cfdisk /dev/sda
+```
+
+Then, you will see the following:
+
+![cfdisk view](./images/cfdisk_launched.png)
+
+Now let’s create our partitions, a first on with `600MB` and another one to get the remaining space:
+- Go to `New` and press `Enter`, in partition size write `600MB` and press `Enter`;
+- Choose `Free space` and go to `New` and press `Enter`, leave space and press `Enter`;
+- Go to `Write` and confirm when asked. Go to `Quit` and leave.
+
+You should now have two partitions:
+- `/dev/sdaX` - ext4 boot (`/dev/sdaX` in this case is the boot partition)
+- `/dev/sdaX` - ext4 root (`/dev/sdaX` in this case is the root partition)
+
+- #### UEFI mode
+
+Run `cfdisk` to create three partitions, one for EFI (if the EFI system partition already exists, just use this partition), another for boot and a third for the encrypted root.
+Swap space will be used as a swap file in the encrypted root file system.
+
+Run `cfdisk` and if asked choose `gpt`:
+```zsh
+cfdisk /dev/sda
+```
+
+Now let’s create our partitions, a first one with `600MB`, a second one with `600MB` (If you need) and a third to get the remaining space:
+- Go to `New` and press `Enter`, in partition size write `600MB` and press `Enter`;
+- Go to `Type` and choose `EFI System`:
+
+![Creating of the EFI system partition using cfdisk](./images/cfdisk_efi_selection.png)
+
+- Choose `Free space`, go to `New` and press `Enter`, in partition size write `600MB` and press `Enter`;
+- Choose `Free space` and go to `New` and press `Enter`, leave space and press `Enter`;
+- Go to `Write` and confirm when asked. Go to `Quit` and leave.
+
+You should now have three partitions:
+- `/dev/sdaX` - EFI system partition (`/dev/sdaX` in this case is the EFI system partition);
+- `/dev/sdaX` — ext4 boot (`/dev/sdaX` in this case is the boot partition);
+- `/dev/sdaX` - ext4 root (`/dev/sdaX` in this case is the root partition)
