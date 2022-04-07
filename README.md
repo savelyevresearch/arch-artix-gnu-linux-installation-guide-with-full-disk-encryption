@@ -369,3 +369,13 @@ This will print out a list of servers:
 
 Now, in the list of servers verify that one of the remote servers start with an asterisk (*).
 That is the server that is currently being used to synchronize your clock.
+
+### Prepare for LUKS encryption
+
+Before disk setup, load the `dm-crypt` and `dm-mod` kernel modules:
+```zsh
+modprobe dm-crypt
+```
+```zsh
+modprobe dm-mod
+```
