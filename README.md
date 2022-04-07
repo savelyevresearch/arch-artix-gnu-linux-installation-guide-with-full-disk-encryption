@@ -420,5 +420,5 @@ Now let’s create our partitions, a first on with `600MB` and another one to ge
 - Go to `Write` and confirm when asked. Go to `Quit` and leave.
 
 You should now have two partitions:
-- `dev/sdaX` - ext4 boot (`dev/sdaX` in this case is the boot partition)
-- `dev/sdaX` - ext4 root (`dev/sdaX` in this case is the root partition)
+- `/dev/sdaX` - ext4 boot (`/dev/sdaX` in this case is the boot partition)
+- `/dev/sdaX` - ext4 root (`/dev/sdaX` in this case is the root partition)
