@@ -611,3 +611,8 @@ mkswap /mnt/swapfile
 ```zsh
 swapon /mnt/swapfile
 ```
+
+To make sure that the swap file has been initialized, do the following:
+```zsh
+free -h
+```
