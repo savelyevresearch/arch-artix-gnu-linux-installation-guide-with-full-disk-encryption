@@ -444,6 +444,84 @@ Now let’s create our partitions, a first one with `600MB`, a second one with `
 - Go to `Write` and confirm when asked. Go to `Quit` and leave.
 
 You should now have three partitions:
-- `/dev/sdaX` - EFI system partition (`/dev/sdaX` in this case is the EFI system partition);
-- `/dev/sdaX` — ext4 boot (`/dev/sdaX` in this case is the boot partition);
+- `/dev/sdaX` - EFI system partition (`/dev/sdaX` in this case is the EFI system partition)
+- `/dev/sdaX` — ext4 boot (`/dev/sdaX` in this case is the boot partition)
 - `/dev/sdaX` - ext4 root (`/dev/sdaX` in this case is the root partition)
+
+### Encrypt root partition
+
+Let’s encrypt root partition. Use the following command, confirm with uppercase `YES` and type your desired password:
+```zsh
+cryptsetup luksFormat /dev/sdaX # /dev/sdaX in this case is the root partition
+```
+
+If you want to move to a tougher path, use the following command:
+```zsh
+cryptsetup --type luks2 --cipher aes-xts-plain64 --hash sha512 --iter-time 5000 --key-size 512 --pbkdf argon2id --use-urandom --verify-passphrase luksFormat /dev/sdaX # /dev/sdaX in this case is the root partition
+```
+
+You can also create a key file for this encrypted partition.
+
+A key file is a file whose data is used as the passphrase to unlock an encrypted volume.
+
+There are many options for creating a key file. In this guide, we are creating a key file with a large number of random characters.
+I think this is the safest option because a large number of random characters guarantee high variance.
+
+To create a key file, we will use the `dd` command:
+```zsh
+dd bs=1M count=2 if=/dev/random of=/etc/mykeyfile iflag=fullblock
+```
+
+If you are planning to store the key file on an external device, you can also simply change the output file to the corresponding directory:
+```zsh
+dd bs=1M count=2 if=/dev/random of=/media/usbstick/mykeyfile iflag=fullblock
+```
+
+To deny any access for other users than root:
+```zsh
+chmod 600 /etc/mykeyfile
+```
+
+Add a key slot for the key file to the LUKS header:
+```zsh
+cryptsetup luksAddKey /dev/sdaX /etc/mykeyfile # /dev/sdaX in this case is the root partition
+```
+
+To make sure that the encrypted partition has two key slots (passphrase and key file), do the following:
+```zsh
+cryptsetup luksDump /dev/sdaX # /dev/sdaX in this case is the root partition
+```
+
+I recommend saving this output to a file and then moving it to an external USB drive:
+```zsh
+cryptsetup luksDump /dev/sdaX > cryptroot.dump # /dev/sdaX in this case is the root partition
+```
+```zsh
+mv /path/to/cryptroot.dump /path/to/mounted/usb/drive
+```
+
+Now open the encrypted partition to allow access to it. The command will prompt for the password, and the partition will be available though `/dev/mapper/cryptroot`:
+```zsh
+cryptsetup open /dev/sdaX cryptroot # /dev/sdaX in this case is the root partition
+```
+
+Or you can specify a key file to open this encrypted partition:
+```zsh
+cryptsetup open --key-file /path/to/keyfile /dev/sdaX cryptroot # /dev/sdaX in this case is the root partition
+```
+
+If the header of a LUKS encrypted partition gets destroyed, you will not be able to decrypt your data.
+It is just as much of a dilemma as forgetting the passphrase or damaging a key-file used to unlock the partition. Damage may occur by your own fault while re-partitioning the disk later or by third-party programs misinterpreting the partition table.
+Therefore, having a backup of the header and storing it on another disk might be a good idea.
+
+To back up the header of an encrypted LUKS partition, do the following:
+```zsh
+cryptsetup luksHeaderBackup /dev/sdaX --header-backup-file /path/to/backup/file/cryptroot.img # /dev/sdaX in this case is the root partition
+```
+
+Then move it to an external USB drive:
+```zsh
+mv /path/to/backup/file/cryptroot.img /path/to/mounted/usb/drive
+```
+
+[More detailed information about cryptsetup](https://wiki.archlinux.org/title/Dm-crypt/Device_encryption).
