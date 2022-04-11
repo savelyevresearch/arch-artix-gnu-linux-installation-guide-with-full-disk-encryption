@@ -525,3 +525,45 @@ mv /path/to/backup/file/cryptroot.img /path/to/mounted/usb/drive
 ```
 
 [More detailed information about cryptsetup](https://wiki.archlinux.org/title/Dm-crypt/Device_encryption).
+
+### Format and mount file system
+
+- #### BIOS mode
+
+Format and mount file system:
+```zsh
+mkfs.ext4 -L boot /dev/sdaX # /dev/sdaX in this case is the boot partition
+```
+```zsh
+mkfs.ext4 -L root /dev/mapper/cryptroot
+```
+
+Now mount them:
+```zsh
+mount /dev/mapper/cryptroot /mnt
+```
+```zsh
+mkdir /mnt/boot
+```
+```zsh
+mount /dev/sdaX /mnt/boot # /dev/sdaX in this case is the boot partition
+```
+
+Finally, create swap file:
+```zsh
+dd if=/dev/zero of=/mnt/swapfile bs=1G count=(RAM * 2)
+```
+```zsh
+chmod 0600 /mnt/swapfile
+```
+```zsh
+mkswap /mnt/swapfile
+```
+```zsh
+swapon /mnt/swapfile
+```
+
+To make sure that the swap file has been initialized, do the following:
+```zsh
+free -h
+```
